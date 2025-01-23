@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-web-app-auto
+  namespace: dev 
+spec:
+  selector:
+    matchLabels:
+      name: node-web-app-auto
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: node-web-app-auto
+    spec:
+      containers:
+      - name: node-web-app-auto 
+        image: node-web-app-auto
+        imagePullPolicy: IfNotPresent        
+        ports:
+        - containerPort: 3000 
+        env:
+          - name: APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                key: access-key
+                name: appd-agent-secret
+        envFrom:
+          - configMapRef:
+              name: appd-nodejs-config  
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-web-app-auto
+spec:
+  selector:
+    app: node-web-app-auto
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 3000
+      targetPort: 3000

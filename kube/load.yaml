@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-app-load
+spec:
+  selector:
+    matchLabels:
+      app: node-app-load
+  template:
+    metadata:
+      labels:
+        app: node-app-load
+    spec:
+      containers:
+        - name: node-app-load
+          image: node-app-load
+          imagePullPolicy: IfNotPresent

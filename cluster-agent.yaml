@@ -1,0 +1,67 @@
+apiVersion: cluster.appdynamics.com/v1alpha1
+kind: Clusteragent
+metadata:
+  name: k8s-cluster-agent
+  namespace: appdynamics
+spec:
+  appName: "<cluster_name>"
+  controllerUrl: "<controller_host_name>"
+  account: "<account_name>"
+  # docker image info
+  image: "docker.io/appdynamics/cluster-agent:23.7.0"
+  serviceAccountName: appdynamics-cluster-agent
+  ### Uncomment the following line if you need pull secret
+  #imagePullSecret: "<your-docker-pull-secret-name>"
+# === AppD CA | Optional agent settings
+  nsToMonitor:
+    - "default"
+    - "appdynamics"
+    - "kube-system"  
+    - "dev"
+    - "test"
+  eventUploadInterval: 10
+  containerRegistrationInterval: 120
+  httpClientTimeout: 30
+#  customSSLSecret: "<secret-name>"
+#  proxyUrl: "<protocol>://<domain>:<port>"
+#  proxyUser: "<proxy-user>"
+  metricsSyncInterval: 30
+  clusterMetricsSyncInterval: 60
+  metadataSyncInterval: 60
+  containerBatchSize: 25
+  podBatchSize: 30
+  metricUploadRetryCount: 3
+  metricUploadRetryIntervalMilliSeconds: 5
+#  podFilter:
+#    blocklistedLabels:
+#      - label1: value1
+#      allowlistedLabels:
+#     #   - label1: value1
+#     #   - label2: value2
+#     # allowlistedNames:
+#     #   - name1
+#     # blocklistedNames:
+#     #   - name2
+  logLevel: "TRACE"
+  logFileSizeMb: 5
+  logFileBackups: 3
+  stdoutLogging: "true"
+  resources:
+    limits:
+      cpu: 300m
+      memory: "200Mi"
+    requests:
+      cpu: 200m
+      memory: "100Mi"
+# === AppD CA | auto-instrumentation-specific settings:
+  instrumentationMethod: Env
+  nsToInstrumentRegex: dev|test
+  appNameStrategy: manual
+  instrumentationRules:
+    - matchString: node-web-app-auto
+      appName: jaynodelabel
+      language: nodejs
+      imageInfo:
+        agentMountPath: /opt/appdynamics
+        image: docker.io/appdynamics/nodejs-agent:24.4.1-18-alma
+        imagePullPolicy: Always  
