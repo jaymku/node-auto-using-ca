@@ -29,7 +29,6 @@ Search & replace the placeholder `<accesskey>` with required access key.
 - #### Updated account details in cluster-agent.yaml
 
 ```yaml
-
   appName: "<cluster_name>"
   controllerUrl: "<controller_host_name>"
   account: "<account_name>"
