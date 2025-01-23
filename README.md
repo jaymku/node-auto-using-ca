@@ -35,7 +35,7 @@ Search & replace the placeholder `<accesskey>` with required access key.
   account: "<account_name>"
 ```
 
-## [3]Build & Run
+### [3]Build & Run
 
 Make sure namespaces `dev` & `appdynamics` is not there in your env.
 The build step will take care of end-to-end installing cluster agent (`ns:appdynamics`) and deploy a sample Node.js application to `dev` namespace accessible at http://localhost:3000. 
