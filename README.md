@@ -23,7 +23,7 @@ kind: ConfigMap
 metadata:
   name: appd-python-config
 ```
-- #### Provide AccessKey 
+- #### Provide AccessKey
 Search & replace the placeholder `<accesskey>` with required access key.
 
 - #### Updated account details in cluster-agent.yaml
@@ -44,7 +44,7 @@ make all
 
 #### Delete and remove deployment
 ```sh
-make cleanall
+make clean
 ```
 
 ### [4] Check deploy Status
